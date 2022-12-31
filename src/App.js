@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import Sidebar from "./Sidebar"
+import Chat from "./Chat.js"
+import "./App.css"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return(
+        <div className='app'>
+            <div className='app_body'>
+            <Sidebar />
+            <Chat />
+            </div>
+        </div>
+
+    )
 }
+//   const [state, setState] = useState(null)
+//   const fetchState = async () => {
+//     try {
+//       const response = await fetch('/api/test')
+//       const data = await response.json()
+//       setState(data)
+//     } catch (error) {
+//       console.error(error)
+//     }
+//   }
+
+//   useEffect(() => {
+//     fetchState()
+//   }, [])
+
+//   return (
+//     <div className="App">
+//       { state && state.eureka ? <>{state.eureka}</> : <>You are still looking don't give up.</> }
+//     </div>
+//   );
+// }
 
 export default App;
