@@ -2,8 +2,27 @@ import { useState, useEffect } from 'react';
 import Sidebar from "./Sidebar"
 import Chat from "./Chat.js"
 import "./App.css"
+import { Routes, Route} from 'react-router-dom'
+
 
 function App() {
+    const [state, setState] = useState(null)
+    const [user, setUser ] = useState(null)
+
+    const fetchState = async () => {
+        try {
+          const response = await fetch('/api/messages')
+          const data = await response.json()
+          setState(data)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      useEffect(() => {
+        fetchState()
+      }, [])
+
     return(
         <div className='app'>
             <div className='app_body'>
@@ -11,6 +30,7 @@ function App() {
             <Chat />
             </div>
         </div>
+
 
     )
 }
