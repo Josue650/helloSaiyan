@@ -7,7 +7,7 @@ import MoreVert from '@mui/icons-material/MoreVertOutlined';
 import InsertEnojiIcon from '@mui/icons-material/InsertEmoticonOutlined';
 import MicIcon from '@mui/icons-material/MicOutlined';
 
-function chat() {
+function chat({ messages }) {
   return (
     <div className='chat'>
       <div className='chat__header'>
@@ -32,25 +32,18 @@ function chat() {
       </div>
 
       <div className='chat__body'>
-        <p className='chat__message'>
-        <span className='chat__name'>Josue</span>
-            This is a message
-            <span className='chat__timestamp'>
-              {new Date().toLocaleString()}
-            </span>
-          </p>
+        {messages.map((message) => (
+          <p className={`chat__message ${message.received && "chat__receiver"}`}>
+          <span className='chat__name'>{message.name} </span>
+              {message.message}
+              <span className='chat__timestamp'>{message.timestamp}</span>
+            </p>
+          ))}
+
 
           <p className='chat__message chat__receiver'>
         <span className='chat__name'>Josue</span>
             From me
-            <span className='chat__timestamp'>
-              {new Date().toLocaleString()}
-            </span>
-          </p>
-
-          <p className='chat__message'>
-        <span className='chat__name'>Josue</span>
-            All the way to you
             <span className='chat__timestamp'>
               {new Date().toLocaleString()}
             </span>
@@ -60,7 +53,7 @@ function chat() {
       <div className='chat__footer'>
         <InsertEnojiIcon />
         <form>
-          <input placeholder='Type a maessage'
+          <input placeholder='Type a message'
            text="text"/>
           <button type='submit'>Send a message</button>
         </form>

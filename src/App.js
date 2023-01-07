@@ -2,32 +2,54 @@ import { useState, useEffect } from 'react';
 import Sidebar from "./Sidebar"
 import Chat from "./Chat.js"
 import "./App.css"
-import { Routes, Route} from 'react-router-dom'
+import Pusher from "pusher-js"
+import axios from 'axios';
+
+export default function App() {
+    const [messages, setMessages] = useState([])
+    const [newMsg, setNewMsg] = useState({
+      message: String,
+      name: String,
+      timestamp: String,
+      received: Boolean
+  })
 
 
-function App() {
-    const [state, setState] = useState(null)
-    const [user, setUser ] = useState(null)
+    // getMessages
 
-    const fetchState = async () => {
-        try {
-          const response = await fetch('/api/messages')
-          const data = await response.json()
-          setState(data)
-        } catch (error) {
-          console.log(error)
-        }
-      }
+
+
+      useEffect(() =>{
+        axios.get('/api/messages')
+        .then(response => {
+          setMessages(response.data)
+        })
+      })
 
       useEffect(() => {
-        fetchState()
-      }, [])
+        const pusher = new Pusher('42f2a5347709eede1b37', {
+          cluster: 'us3'
+        });
+
+        const channel = pusher.subscribe('messages');
+        channel.bind('inserted', function(newMessge) {
+          alert(JSON.stringify(newMessge));
+          setMessages([...messages, newMessge])
+        });
+
+        return () => {
+          channel.unbind_all();
+          channel.unsubscribe();
+        }
+      }, [messages])
+
+      console.log(messages)
 
     return(
         <div className='app'>
             <div className='app_body'>
             <Sidebar />
-            <Chat />
+            <Chat  messages={messages}/>
             </div>
         </div>
 
@@ -55,5 +77,34 @@ function App() {
 //     </div>
 //   );
 // }
+ // const [receivedMsg, setReceivedMsg ] = useState([])
+    // const [newMsg, setNewMsg] = useState({
+    //   message: '',
+    //   name: '',
+    //   timestamp: '',
+    //   received: false
+    // })
 
-export default App;
+    // const createMsg = async () => {
+    //   const body = {...newMsg}
+    //     try {
+    //         const response = await fetch(`/api/messages`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(body)
+    //         })
+    //         const createdMsg = await response.json()
+    //         const msgCopy = [createdMsg]
+    //         setNewMsg(msgCopy)
+    //         set({
+    //           message: '',
+    //           name: '',
+    //           timestamp: '',
+    //           received: false
+    //         })
+    //     } catch (error) {
+    //       console.error(error)
+    //     }
+    //   }

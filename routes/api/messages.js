@@ -1,18 +1,20 @@
 const express = require('express')
 const router = express.Router()
-const { dataController, apiController } = require('../../controllers/api/messages')
+const msgCtrl = require('../../controllers/api/messages')
 
 // add routes
 // Index /api/messages
-router.get('/', dataController.index, apiController.index)
+router.get('/', msgCtrl.indexSent, msgCtrl.jsonMessages)
+// Index /api/messages/complete
+router.get('/received', msgCtrl.indexReceived, msgCtrl.jsonMessages)
 // Delete /api/messages/:id
-router.delete('/:id', dataController.destroy, apiController.show)
+router.delete('/:id', msgCtrl.destroy, msgCtrl.jsonMessage)
 // Update /api/messages/:id
-router.put('/:id', dataController.update, apiController.show)
+router.put('/:id', msgCtrl.update, msgCtrl.jsonMessage)
 // Create /api/messages
-router.post('/', dataController.create, apiController.show)
+router.post('/', msgCtrl.create, msgCtrl.jsonMessage)
 // Show /api/messages/:id
-router.get('/:id', dataController.show, apiController.show)
+router.get('/:id', msgCtrl.show, msgCtrl.jsonMessage)
 
 
 module.exports = router
