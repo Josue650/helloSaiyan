@@ -20,8 +20,14 @@ app.use(favicon(path.join(__dirname, 'build', 'favicon.ico' )))
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(cors())
 
-// app.use('/api/messages', require("./routes/api/messages"))
-app.use('/api/messages', require('./routes/api/messages'))
+// app.use(require('./config/checkToken'))
+
+app.use('/api/users', require('./routes/api/users'))
+
+
+app.use('/api/messages', require("./routes/api/messages"))
+// const ensureLoggedIn = require('./config/ensureLoggedIn')
+// app.use('/api/messages', ensureLoggedIn, require('./routes/api/messages'))
 
 app.get('/', (req, res) => {
     res.json({'eureka': 'you have found it'})

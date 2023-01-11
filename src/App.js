@@ -4,54 +4,59 @@ import Chat from "./Chat.js"
 import "./App.css"
 import Pusher from "pusher-js"
 import axios from 'axios';
+import AuthPage from './pages/AuthPage/AuthPage';
 
 export default function App() {
-    const [messages, setMessages] = useState([])
-    const [newMsg, setNewMsg] = useState({
-      message: String,
-      name: String,
-      timestamp: String,
-      received: Boolean
+  const [messages, setMessages] = useState([])
+  const [user, setUser ] = useState(null)
+  const [newMsg, setNewMsg] = useState({
+    message: String,
+    name: String,
+    imestamp: String,
+    received: Boolean
   })
 
-
-    // getMessages
-
-
-
-      useEffect(() =>{
-        axios.get('/api/messages')
-        .then(response => {
-          setMessages(response.data)
-        })
+    useEffect(() => {
+      axios.get('/api/messages')
+      .then(response => {
+        setMessages(response.data)
       })
+    }, [])
 
-      useEffect(() => {
-        const pusher = new Pusher('42f2a5347709eede1b37', {
-          cluster: 'us3'
-        });
+    useEffect(() => {
+      const pusher = new Pusher('42f2a5347709eede1b37', {
+        cluster: 'us3'
+      });
 
-        const channel = pusher.subscribe('messages');
-        channel.bind('inserted', function(newMessge) {
-          alert(JSON.stringify(newMessge));
-          setMessages([...messages, newMessge])
-        });
+    const channel = pusher.subscribe('messages');
+      channel.bind('inserted', function(newMessge) {
+        alert(JSON.stringify(data))
+        setMessages([...messages, newMessge])
+      });
 
-        return () => {
-          channel.unbind_all();
-          channel.unsubscribe();
-        }
-      }, [messages])
+    return () => {
+        channel.unbind_all();
+        channel.unsubscribe();
+      }
+    }, [messages])
 
-      console.log(messages)
+    console.log(messages)
 
     return(
-        <div className='app'>
+        <main className='app'>
+          {
+            user ?
+            <>
             <div className='app_body'>
             <Sidebar />
             <Chat  messages={messages}/>
             </div>
-        </div>
+            </>
+            :
+        <AuthPage setUser={setUser}/>
+      }
+
+        </main>
 
 
     )

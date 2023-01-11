@@ -6,15 +6,32 @@ import AttachFile from '@mui/icons-material/AttachFileOutlined';
 import MoreVert from '@mui/icons-material/MoreVertOutlined';
 import InsertEnojiIcon from '@mui/icons-material/InsertEmoticonOutlined';
 import MicIcon from '@mui/icons-material/MicOutlined';
+import axios from './axios';
+import { useState } from 'react';
 
-function chat({ messages }) {
+function Chat({ messages }) {
+  const [input, setInput] = useState("")
+
+  const sendMsg = async (e) => {
+    e.preventDefault();
+
+    await axios.post('/api/messages', {
+      message: input,
+      name: "Orlando T",
+      timestamp: "Now",
+      received: false,
+
+    })
+    setInput("")
+  };
+
   return (
     <div className='chat'>
       <div className='chat__header'>
-        <Avatar />
+      <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgJ4liRLDl6CMCyT2BxL3rP7LvwR5sPfWhOQ&usqp=CAU"/>
 
         <div className='chat__headerInfo'>
-          <h3>Room Name</h3>
+          <h3>Saiyan Room</h3>
           <p>Last seen at...</p>
         </div>
 
@@ -53,9 +70,15 @@ function chat({ messages }) {
       <div className='chat__footer'>
         <InsertEnojiIcon />
         <form>
-          <input placeholder='Type a message'
-           text="text"/>
-          <button type='submit'>Send a message</button>
+          <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder='Type a message'
+          text="text"
+          />
+          <button onClick={sendMsg} type='submit'>
+            Send a message
+          </button>
         </form>
         <MicIcon />
       </div>
@@ -63,4 +86,4 @@ function chat({ messages }) {
   )
 }
 
-export default chat
+export default Chat
