@@ -8,6 +8,8 @@
 
 * The page will have you sign up before joining a room and creating a message( Enter yout name, email and passwoed )
 ![alt text](img/Hello.png)
+![alt text](img/Room.png)
+![alt text](img/Chat.png)
 
 * It should take you to the welcome room
 
