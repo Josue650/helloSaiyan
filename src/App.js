@@ -9,35 +9,38 @@ import AuthPage from './pages/AuthPage/AuthPage';
 export default function App() {
   const [messages, setMessages] = useState([])
   const [user, setUser ] = useState(null)
+  const [foundMessage, setFoundMessage] = useState(null)
+  // const [toggle, setToggle] = useState(false)
   const [newMsg, setNewMsg] = useState({
     message: String,
     name: String,
     imestamp: String,
     received: Boolean
   })
-
     useEffect(() => {
       axios.get('/api/messages')
       .then(response => {
         setMessages(response.data)
       })
-    }, [])
+    }, [foundMessage])
 
     useEffect(() => {
       const pusher = new Pusher('42f2a5347709eede1b37', {
         cluster: 'us3'
       });
 
-    const channel = pusher.subscribe('messages');
+      const channel = pusher.subscribe('messages');
+
       channel.bind('inserted', function(newMessge) {
-        alert(JSON.stringify(data))
         setMessages([...messages, newMessge])
       });
 
-    return () => {
+
+      return () =>{
         channel.unbind_all();
-        channel.unsubscribe();
+        channel.unsubscribe()
       }
+
     }, [messages])
 
     console.log(messages)
@@ -49,7 +52,10 @@ export default function App() {
             <>
             <div className='app_body'>
             <Sidebar />
-            <Chat  messages={messages}/>
+            <Chat  messages={messages}
+            setMessages={setMessages}
+            setFoundMessage={setFoundMessage}
+            setNewMsg={setNewMsg}/>
             </div>
             </>
             :

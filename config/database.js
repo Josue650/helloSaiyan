@@ -28,10 +28,12 @@ db.on('connected', function () {
             name: messageDetails.name,
             message: messageDetails.message,
             timestamp: messageDetails.timestamp,
-            received: messageDetails.received 
+            received: messageDetails.received
        })
     } else {
       console.log("Error triggered pusher")
     }
   })
 });
+
+// module.exports = pusher

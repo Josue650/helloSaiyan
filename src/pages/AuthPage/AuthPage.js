@@ -8,6 +8,7 @@ export default function AuthPage(props){
         <main>
             <div className='container'>
                 <div className='header-container'>
+                    <h1>Hello Saiyan</h1>
                     <h3> Join the Fun </h3>
                 </div>
                 <SignUpForm setUser={props.setUser}/>

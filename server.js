@@ -1,4 +1,5 @@
 require('dotenv').config()
+// const pusher =
 require('./config/database');
 const express = require('express')
 const path = require('path')
@@ -7,18 +8,19 @@ const logger = require('morgan');
 const PORT = process.env.PORT || 3001
 const cors = require('cors')
 
-
 const app = express()
 
 app.use(express.json())// req.body
 app.use((req, res, next) => {
     res.locals.data = {}
+    // res.locals.pusher = pusher
     next()
 })
 app.use(logger('dev'))
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico' )))
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(cors())
+
 
 // app.use(require('./config/checkToken'))
 

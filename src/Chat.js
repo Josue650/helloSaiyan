@@ -7,23 +7,54 @@ import MoreVert from '@mui/icons-material/MoreVertOutlined';
 import InsertEnojiIcon from '@mui/icons-material/InsertEmoticonOutlined';
 import MicIcon from '@mui/icons-material/MicOutlined';
 import axios from './axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function Chat({ messages }) {
+
+function Chat({ messages, setMessages, setFoundMessage, newMsg }) {
   const [input, setInput] = useState("")
+
 
   const sendMsg = async (e) => {
     e.preventDefault();
 
-    await axios.post('/api/messages', {
+     const response = await axios.post('/api/messages', {
       message: input,
-      name: "Orlando T",
-      timestamp: "Now",
+      name: "Sway",
+      timestamp: "1/11/2023",
       received: false,
 
     })
+    setMessages([...messages, response.data])
     setInput("")
   };
+
+  const deleteMessage = async (id) => {
+    try {
+        const response = await fetch(`/api/messages/${id}`, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const data = await response.json()
+        setFoundMessage(data)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+const getMsgs = async () => {
+  try{
+      const response = await fetch('/api/messeges')
+      const foundMessage = await response.json()
+      setFoundMessage(foundMessage.reverse())
+  } catch(error) {
+      console.error(error)
+  }
+}
+useEffect(() => {
+  getMsgs()
+}, [])
 
   return (
     <div className='chat'>
@@ -54,13 +85,14 @@ function Chat({ messages }) {
           <span className='chat__name'>{message.name} </span>
               {message.message}
               <span className='chat__timestamp'>{message.timestamp}</span>
+              <br/><button onClick={() => deleteMessage(message._id)}>Delete Message</button>
             </p>
           ))}
 
 
           <p className='chat__message chat__receiver'>
-        <span className='chat__name'>Josue</span>
-            From me
+        <span className='chat__name'>King Kai</span>
+            Welcome Saiyan
             <span className='chat__timestamp'>
               {new Date().toLocaleString()}
             </span>

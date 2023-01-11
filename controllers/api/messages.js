@@ -3,7 +3,6 @@ const Message = require('../../models/dbMessages')
 module.exports = {
   create,
   indexSent,
-  indexReceived,
   show,
   update,
   destroy,
@@ -21,10 +20,12 @@ function jsonMessages (req, res){
 
 // create
 async function create(req, res, next) {
+  // req.body.user = req.user._id
   try {
       const message = await Message.create(req.body)
       console.log(message)
       res.locals.data.message = message
+      // res.locals.pusher.trigger("inserted",message)
       next()
   } catch (error) {
       res.status(400).json({ msg: error.message })
@@ -34,16 +35,6 @@ async function create(req, res, next) {
 async function indexSent(req,res, next){
   try {
       const messages = await Message.find({ received: false })
-      res.locals.data.messages = messages
-      next()
-  } catch (error) {
-      res.status(400).json({ msg: error.message })
-  }
-}
-
-async function indexReceived(req,res, next){
-  try {
-      const messages = await Message.find({ received: true })
       res.locals.data.messages = messages
       next()
   } catch (error) {

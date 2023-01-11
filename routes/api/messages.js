@@ -5,8 +5,6 @@ const msgCtrl = require('../../controllers/api/messages')
 // add routes
 // Index /api/messages
 router.get('/', msgCtrl.indexSent, msgCtrl.jsonMessages)
-// Index /api/messages/complete
-router.get('/received', msgCtrl.indexReceived, msgCtrl.jsonMessages)
 // Delete /api/messages/:id
 router.delete('/:id', msgCtrl.destroy, msgCtrl.jsonMessage)
 // Update /api/messages/:id

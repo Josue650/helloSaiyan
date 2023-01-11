@@ -11,6 +11,9 @@ function SidebarChat() {
             <p>This is the last message</p>
         </div>
     </div>
+
+
+
   )
 }
 
