@@ -8,7 +8,7 @@ const db = mongoose.connection;
 const pusher = new Pusher({
   appId: "1534576",
   key: "42f2a5347709eede1b37",
-  secret: "ba55029436db555b38bd",
+  secret: process.env.PUSHER_SECRET,
   cluster: "us3",
   useTLS: true
 });

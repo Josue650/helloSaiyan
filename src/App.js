@@ -17,10 +17,12 @@ export default function App() {
     imestamp: String,
     received: Boolean
   })
+
+
     useEffect(() => {
       axios.get('/api/messages')
       .then(response => {
-        setMessages(response.data)
+        setMessages(() => [...response.data])
       })
     }, [foundMessage])
 
@@ -32,7 +34,7 @@ export default function App() {
       const channel = pusher.subscribe('messages');
 
       channel.bind('inserted', function(newMessge) {
-        setMessages([...messages, newMessge])
+        setMessages((previousMessages)=> [...previousMessages, newMessge])
       });
 
 
