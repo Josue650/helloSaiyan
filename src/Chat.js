@@ -19,8 +19,8 @@ function Chat({ messages, setMessages, setFoundMessage, newMsg }) {
 
      const response = await axios.post('/api/messages', {
       message: input,
-      name: "Sway",
-      timestamp: "1/11/2023",
+      name: "Josue",
+      timestamp: "1/14/2023",
       received: false,
 
     })
@@ -54,7 +54,7 @@ const getMsgs = async () => {
 }
 useEffect(() => {
   getMsgs()
-}, [])
+}, [messages])
 
   return (
     <div className='chat'>
@@ -92,7 +92,7 @@ useEffect(() => {
 
           <p className='chat__message chat__receiver'>
         <span className='chat__name'>King Kai</span>
-            Welcome Saiyan
+            Hello Saiyan
             <span className='chat__timestamp'>
               {new Date().toLocaleString()}
             </span>
