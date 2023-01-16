@@ -4,6 +4,8 @@
 
 ## This project is a clone of whats App. I got the inspiration for this project from having my own whatapp account. I think  its pretty cool how its the number one social media app around the world.
 
+## Star the App https://hello-saiyan.herokuapp.com/
+
 ## Navigate to the signup page link
 
 * The page will have you sign up before joining a room and creating a message( Enter yout name, email and passwoed )

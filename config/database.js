@@ -23,7 +23,7 @@ db.on('connected', function () {
 
     if(change.operationType === 'insert'){
        const messageDetails = change.fullDocument;
-       pusher.trigger('message', 'inserted',
+       pusher.trigger('messages', 'inserted',
           {
             name: messageDetails.name,
             message: messageDetails.message,
