@@ -3,7 +3,7 @@
 ## An app that lets you talk to your fellow Saiyans
 
 ## This project is a clone of whats App. I got the inspiration for this project from having my own whatapp account. I think  its pretty cool how its the number one social media app around the world.
-# Youtube link: https://www.youtube.com/watch?v=ktjafK4SgWM&t=42397s
+### Youtube link: https://www.youtube.com/watch?v=ktjafK4SgWM&t=42397s
 
 ## Star the App https://hello-saiyan.herokuapp.com/
 
