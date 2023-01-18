@@ -12,14 +12,19 @@ import { useState, useEffect } from 'react';
 
 function Chat({ messages, setMessages, setFoundMessage, newMsg }) {
   const [input, setInput] = useState("")
+  const [showPicker, setShowPicker] = useState(false)
 
+  const onEmojiClick = (e, emojiObj) => {
+    setInputStr(prevInput => prevInput + emojiObj.emoji);
+    setShowPicker(false)
+  }
 
   const sendMsg = async (e) => {
     e.preventDefault();
 
      const response = await axios.post('/api/messages', {
       message: input,
-      name: "Sway",
+      name: "Goku",
       timestamp: "1/11/2023",
       received: false,
 
@@ -101,6 +106,7 @@ useEffect(() => {
 
       <div className='chat__footer'>
         <InsertEnojiIcon />
+        {/* onClick={() => setInput(e.target.value)} */}
         <form>
           <input
           value={input}
