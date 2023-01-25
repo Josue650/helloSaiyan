@@ -8,15 +8,16 @@ import InsertEnojiIcon from '@mui/icons-material/InsertEmoticonOutlined';
 import MicIcon from '@mui/icons-material/MicOutlined';
 import axios from './axios';
 import { useState, useEffect } from 'react';
+import EmojiPicker from 'emoji-picker-react';
 
-
-function Chat({ messages, setMessages, setFoundMessage, newMsg }) {
+function Chat({ messages, setMessages, setFoundMessage, newMsg, user }) {
   const [input, setInput] = useState("")
   const [showPicker, setShowPicker] = useState(false)
 
-  const onEmojiClick = (e, emojiObj) => {
-    setInputStr(prevInput => prevInput + emojiObj.emoji);
+  const onEmojiClick = (emojiObj, e ) => {
+    setInput(prevInput => prevInput + emojiObj.emoji);
     setShowPicker(false)
+
   }
 
   const sendMsg = async (e) => {
@@ -24,8 +25,7 @@ function Chat({ messages, setMessages, setFoundMessage, newMsg }) {
 
      const response = await axios.post('/api/messages', {
       message: input,
-      name: "Goku",
-      timestamp: "1/11/2023",
+      name: user.name,
       received: false,
 
     })
@@ -85,28 +85,30 @@ useEffect(() => {
       </div>
 
       <div className='chat__body'>
-        {messages.map((message) => (
+        {messages.map((message) => {
+          const date = new Date(message.createdAt)
+       return (
           <p className={`chat__message ${message.received && "chat__receiver"}`}>
           <span className='chat__name'>{message.name} </span>
               {message.message}
-              <span className='chat__timestamp'>{message.timestamp}</span>
+              <span className='chat__timestamp'>{date.toLocaleString()}</span>
               <br/><button onClick={() => deleteMessage(message._id)}>Delete Message</button>
             </p>
-          ))}
+          )})}
 
 
           <p className='chat__message chat__receiver'>
-        <span className='chat__name'>King Kai</span>
-            Welcome Saiyan
+        <span className='chat__name'></span>
             <span className='chat__timestamp'>
-              {new Date().toLocaleString()}
+
             </span>
           </p>
       </div>
 
       <div className='chat__footer'>
-        <InsertEnojiIcon />
-        {/* onClick={() => setInput(e.target.value)} */}
+        <InsertEnojiIcon onClick={() => setShowPicker(!showPicker)}/>
+        {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
+
         <form>
           <input
           value={input}

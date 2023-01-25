@@ -5,10 +5,11 @@ import "./App.css"
 import Pusher from "pusher-js"
 import axios from 'axios';
 import AuthPage from './pages/AuthPage/AuthPage';
+import { getUser } from './utilities/users-service';
 
 export default function App() {
   const [messages, setMessages] = useState([])
-  const [user, setUser ] = useState(null)
+  const [user, setUser ] = useState(getUser())
   const [foundMessage, setFoundMessage] = useState(null)
   // const [toggle, setToggle] = useState(false)
   const [newMsg, setNewMsg] = useState({
@@ -57,7 +58,8 @@ export default function App() {
             <Chat  messages={messages}
             setMessages={setMessages}
             setFoundMessage={setFoundMessage}
-            setNewMsg={setNewMsg}/>
+            setNewMsg={setNewMsg}
+            user={user}/>
             </div>
             </>
             :
@@ -69,55 +71,3 @@ export default function App() {
 
     )
 }
-//   const [state, setState] = useState(null)
-//   const fetchState = async () => {
-//     try {
-//       const response = await fetch('/api/test')
-//       const data = await response.json()
-//       setState(data)
-//     } catch (error) {
-//       console.error(error)
-//     }
-//   }
-
-//   useEffect(() => {
-//     fetchState()
-//   }, [])
-
-//   return (
-//     <div className="App">
-//       { state && state.eureka ? <>{state.eureka}</> : <>You are still looking don't give up.</> }
-//     </div>
-//   );
-// }
- // const [receivedMsg, setReceivedMsg ] = useState([])
-    // const [newMsg, setNewMsg] = useState({
-    //   message: '',
-    //   name: '',
-    //   timestamp: '',
-    //   received: false
-    // })
-
-    // const createMsg = async () => {
-    //   const body = {...newMsg}
-    //     try {
-    //         const response = await fetch(`/api/messages`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify(body)
-    //         })
-    //         const createdMsg = await response.json()
-    //         const msgCopy = [createdMsg]
-    //         setNewMsg(msgCopy)
-    //         set({
-    //           message: '',
-    //           name: '',
-    //           timestamp: '',
-    //           received: false
-    //         })
-    //     } catch (error) {
-    //       console.error(error)
-    //     }
-    //   }

@@ -35,5 +35,3 @@ db.on('connected', function () {
     }
   })
 });
-
-// module.exports = pusher
