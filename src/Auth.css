@@ -5,12 +5,16 @@
 }
 .container{
     text-align: center;
+    background-color: #86563C;
+    width: 400px;
+    height: 300px;
     padding: 30px;
-    width: 25vw;
+    padding-top: 1px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
     align-items: center;
     justify-content: space-around;
     background-color: #02975ea4;
-    border-radius: 40px;
+    border-radius: 20px;
     color: white;
     display: flex;
     font-family: 'Righteous', cursive;

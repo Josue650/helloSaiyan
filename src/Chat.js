@@ -20,6 +20,15 @@ function Chat({ messages, setMessages, setFoundMessage, newMsg, user }) {
 
   }
 
+  const handleFileInput = (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    axios.post("/server/path", formData)
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+};
+
   const sendMsg = async (e) => {
     e.preventDefault();
 
@@ -76,7 +85,8 @@ useEffect(() => {
             <SearchOutlined/>
           </IconButton>
           <IconButton>
-            <AttachFile />
+            <AttachFile
+            input type="file" onChange={handleFileInput}  />
           </IconButton>
           <IconButton>
             <MoreVert />
