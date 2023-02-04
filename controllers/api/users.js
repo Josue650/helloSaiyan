@@ -37,14 +37,27 @@ const dataController = {
     } catch {
       res.status(400).json('Bad Credentials')
     }
+  },
+  async update (req,res, next){
+    try{
+      const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+      res.locals.data.user = user
+      next()
+    } catch (e){
+      res.status(400).json(e)
+    }
   }
 }
 
 const apiController = {
   auth (req, res) {
     res.json(res.locals.data.token)
+  },
+  user (req, res){
+    res.json(res.locals.data.user)
   }
 }
+
 
 module.exports = {
   checkToken,
